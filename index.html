@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Training Space</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="glow glow-one"></div>
+  <div class="glow glow-two"></div>
+  <div class="glow glow-three"></div>
+
+  <div class="app-shell">
+    <section class="welcome-screen" id="welcome-screen">
+      <div class="welcome-card glass-panel">
+        <p class="overline">Training Space</p>
+        <h1>Welcome back to your training space</h1>
+        <p id="welcome-copy">A calm place to log today&apos;s weight and the work that matters.</p>
+        <button class="primary-button" type="button" id="welcome-continue">Continue</button>
+      </div>
+    </section>
+
+    <main class="app-frame" id="app-frame">
+      <header class="app-header">
+        <div>
+          <p class="overline" id="header-kicker">Weight</p>
+          <h2 id="header-title">Today&apos;s check-in</h2>
+        </div>
+        <span class="glass-pill" id="header-date-label">Today</span>
+      </header>
+
+      <section class="tab-screen active" data-tab="weight">
+        <div class="screen-stack">
+          <article class="glass-panel focus-card">
+            <p class="section-label">Current</p>
+            <div class="hero-row">
+              <div>
+                <h3 id="weight-current-value">--</h3>
+                <p id="weight-current-meta">No entry for today yet.</p>
+              </div>
+              <span class="soft-badge" id="weight-delta-badge">Ready</span>
+            </div>
+          </article>
+
+          <article class="glass-panel">
+            <div class="section-head">
+              <div>
+                <p class="section-label">Today</p>
+                <h3 id="weight-form-title">Log today&apos;s weight</h3>
+              </div>
+              <button class="text-button" type="button" id="weight-cancel-btn" hidden>Cancel</button>
+            </div>
+
+            <form id="weight-form" class="minimal-form">
+              <input type="hidden" id="weight-entry-id">
+
+              <label>
+                <span>Date</span>
+                <input type="date" id="weight-date" required>
+              </label>
+
+              <label>
+                <span>Weight (kg)</span>
+                <input type="number" id="weight-value" min="20" max="400" step="0.1" placeholder="80.4" required>
+              </label>
+
+              <label>
+                <span>Note</span>
+                <textarea id="weight-note" rows="2" placeholder="Optional"></textarea>
+              </label>
+
+              <button class="primary-button" type="submit" id="weight-submit-btn">Save Weight</button>
+            </form>
+          </article>
+
+          <article class="glass-panel">
+            <div class="inline-row">
+              <div>
+                <p class="section-label">Trend</p>
+                <h3>Weight progress</h3>
+              </div>
+              <button class="toggle-button" type="button" id="weight-chart-toggle" aria-pressed="false">Show Graph</button>
+            </div>
+
+            <div class="chart-panel" id="weight-chart-panel" hidden>
+              <canvas id="weight-chart"></canvas>
+            </div>
+          </article>
+
+          <article class="glass-panel">
+            <div class="section-head">
+              <div>
+                <p class="section-label">Recent</p>
+                <h3>Recent weights</h3>
+              </div>
+            </div>
+
+            <div class="compact-list" id="weight-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="tab-screen" data-tab="workout">
+        <div class="screen-stack" id="workout-view"></div>
+      </section>
+
+      <section class="tab-screen" data-tab="settings">
+        <div class="screen-stack">
+          <article class="glass-panel">
+            <div class="section-head">
+              <div>
+                <p class="section-label">Profile</p>
+                <h3>Your details</h3>
+              </div>
+            </div>
+
+            <form id="profile-form" class="minimal-form">
+              <label>
+                <span>Name</span>
+                <input type="text" id="profile-name" placeholder="Alex">
+              </label>
+
+              <label>
+                <span>Age</span>
+                <input type="number" id="profile-age" min="0" max="120" placeholder="Optional">
+              </label>
+
+              <label>
+                <span>Height (cm)</span>
+                <input type="number" id="profile-height" min="0" max="260" placeholder="Optional">
+              </label>
+
+              <label>
+                <span>Starting Weight (kg)</span>
+                <input type="number" id="profile-starting-weight" min="20" max="400" step="0.1" placeholder="Optional">
+              </label>
+
+              <button class="primary-button" type="submit">Save Profile</button>
+            </form>
+          </article>
+
+          <article class="glass-panel danger-panel">
+            <div class="section-head">
+              <div>
+                <p class="section-label">Reset</p>
+                <h3>Start fresh</h3>
+              </div>
+            </div>
+            <p class="support-copy">This clears the greeting state, profile, weights, workouts, and setup data from localStorage.</p>
+            <button class="secondary-button danger-button" type="button" id="reset-data-btn">Reset All Data</button>
+          </article>
+
+          <p class="settings-credit">made by Harsh</p>
+        </div>
+      </section>
+
+      <nav class="bottom-dock" aria-label="Primary">
+        <button class="dock-tab active" type="button" data-tab="weight">
+          <span>Weight</span>
+        </button>
+        <button class="dock-tab" type="button" data-tab="workout">
+          <span>Workout</span>
+        </button>
+        <button class="dock-tab" type="button" data-tab="settings">
+          <span>Settings</span>
+        </button>
+      </nav>
+    </main>
+
+    <div class="modal-backdrop" id="reset-modal" hidden>
+      <div class="modal-card glass-panel">
+        <p class="section-label">Reset Data</p>
+        <h3>Clear everything?</h3>
+        <p>All saved weights, workouts, setup preferences, and profile details will be removed.</p>
+        <div class="modal-actions">
+          <button class="secondary-button" type="button" id="reset-cancel-btn">Cancel</button>
+          <button class="primary-button danger-fill" type="button" id="reset-confirm-btn">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast-stack" id="toast-stack" aria-live="polite" aria-atomic="true"></div>
+  </div>
+</body>
+</html>
